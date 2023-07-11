@@ -9,3 +9,43 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  uuid            String      @id @default(uuid())
+  email           String      @unique
+  name            String?
+  hashed_password String
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  bookshelves     Bookshelf[]
+}
+
+model Bookshelf {
+  uuid      String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  creatorId String
+  creator   User     @relation(fields: [creatorId], references: [uuid])
+  books     Book[]
+}
+
+model Origin {
+  isbn      String   @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String
+  author    String
+  price     Int
+  books     Book[]
+}
+
+model Book {
+  uuid        String    @id @default(uuid())
+  isbn        String
+  origin      Origin    @relation(fields: [isbn], references: [isbn])
+  bookshelfId String
+  bookshelf   Bookshelf @relation(fields: [bookshelfId], references: [uuid])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
