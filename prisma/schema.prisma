@@ -49,3 +49,20 @@ model Book {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
+
+model Sensor {
+  uuid      String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  data      Data[]
+}
+
+model Data {
+  id          Int      @id @default(autoincrement())
+  sensorUuid  String
+  sensor      Sensor   @relation(fields: [sensorUuid], references: [uuid])
+  temperature Float
+  humidity    Float
+  createdAt   DateTime @default(now())
+}
