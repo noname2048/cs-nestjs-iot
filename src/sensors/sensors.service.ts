@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateSensorDto } from '~/sensors/dtos/create-sensor.dto';
+import { CreateSensorDto } from '@src/sensors/dtos/create-sensor.dto';
 import { PrismaService } from '../prisma.service';
 import { Sensor, Prisma } from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
