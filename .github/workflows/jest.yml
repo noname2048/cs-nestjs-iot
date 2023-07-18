@@ -31,6 +31,5 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-
       - run: pnpm install
-        if: steps.cache-pnpm.outputs.cache-hit != 'true'
       - run: pnpm build
       - run: pnpm test
