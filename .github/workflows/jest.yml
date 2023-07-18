@@ -2,12 +2,12 @@ name: Nestjs Test
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, ci-test ]
   pull_request:
     branches: [ main ]
 
 env:
-  NODE_ENV: dev
+  NODE_ENV: CI
 
 jobs:
   test:
@@ -20,7 +20,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 6.0.2
       - run: pnpm install
       - run: pnpm build
       - run: pnpm test
-
