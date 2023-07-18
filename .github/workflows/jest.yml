@@ -16,20 +16,33 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
+
       - name: setup-node
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
+
       - uses: pnpm/action-setup@v2
         with:
-          version: 6.0.2
+          version: 7
+          run_install: flase
+
+      - name: Get pnpm store directory
+        id: pnpm-store
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
       - uses: actions/cache@v3
         id: cache-pnpm
         with:
-          path: ~/.pnpm-store
+          path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-
+
       - run: pnpm install
+
       - run: pnpm build
+
       - run: pnpm test
