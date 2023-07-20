@@ -22,6 +22,7 @@ describe('SensorsController', () => {
   describe('findAll', () => {
     it('should return an array of sensors', async () => {
       expect(1).toBe(1);
+      expect(2).toBe(2);
     });
   });
 });
